@@ -1,0 +1,115 @@
+{
+  "definition": {
+    "parts": [
+      {
+        "path": "pipeline-content.json",
+        "payload": {
+          "properties": {
+            "activities": [
+              {
+                "name": "export acr data",
+                "type": "TridentNotebook",
+                "dependsOn": [],
+                "policy": {
+                  "timeout": "0.12:00:00",
+                  "retry": 0,
+                  "retryIntervalInSeconds": 30,
+                  "secureOutput": false,
+                  "secureInput": false
+                },
+                "typeProperties": {
+                  "notebookId": "e2855737-bd8f-4360-9032-6410c3838f43",
+                  "workspaceId": "b2a91082-1f0e-404e-bf25-6d717b635637"
+                }
+              },
+              {
+                "name": "merge to lakehouse",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                  {
+                    "activity": "export acr data",
+                    "dependencyConditions": [
+                      "Succeeded"
+                    ]
+                  }
+                ],
+                "policy": {
+                  "timeout": "0.12:00:00",
+                  "retry": 0,
+                  "retryIntervalInSeconds": 30,
+                  "secureOutput": false,
+                  "secureInput": false
+                },
+                "typeProperties": {
+                  "notebookId": "60cfcc56-eeec-45c6-b51e-5598ffc58096",
+                  "workspaceId": "b2a91082-1f0e-404e-bf25-6d717b635637"
+                }
+              },
+              {
+                "name": "refresh semantic model",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                  {
+                    "activity": "merge to lakehouse",
+                    "dependencyConditions": [
+                      "Succeeded"
+                    ]
+                  }
+                ],
+                "policy": {
+                  "timeout": "0.12:00:00",
+                  "retry": 0,
+                  "retryIntervalInSeconds": 30,
+                  "secureOutput": false,
+                  "secureInput": false
+                },
+                "typeProperties": {
+                  "notebookId": "ce7b6ee1-db7a-45e6-97ba-b9045c8392e5",
+                  "workspaceId": "b2a91082-1f0e-404e-bf25-6d717b635637"
+                }
+              }
+            ]
+          }
+        },
+        "payloadType": "InlineBase64"
+      },
+      {
+        "path": ".schedules",
+        "payload": {
+          "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/schedules/1.0.0/schema.json",
+          "schedules": [
+            {
+              "enabled": true,
+              "jobType": "Execute",
+              "configuration": {
+                "type": "Daily",
+                "startDateTime": "2025-09-06T00:00:00",
+                "endDateTime": "2025-10-04T23:59:00",
+                "localTimeZoneId": "Romance Standard Time",
+                "times": [
+                  "07:30"
+                ]
+              }
+            }
+          ]
+        },
+        "payloadType": "InlineBase64"
+      },
+      {
+        "path": ".platform",
+        "payload": {
+          "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+          "metadata": {
+            "type": "DataPipeline",
+            "displayName": "PL_orchestrate_acr"
+          },
+          "config": {
+            "version": "2.0",
+            "logicalId": "00000000-0000-0000-0000-000000000000"
+          }
+        },
+        "payloadType": "InlineBase64"
+      }
+    ]
+  }
+}
