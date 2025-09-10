@@ -1,5 +1,0 @@
-relationship e492b9d5-663c-4ba0-937a-f85fd934012f
-	joinOnDateBehavior: datePartOnly
-	fromColumn: acr.'Fiscal Month'
-	toColumn: LocalDateTable_aeddef17-661a-45fe-9deb-a484487a841c.Date
-
