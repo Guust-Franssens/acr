@@ -1,0 +1,117 @@
+table acr
+	lineageTag: 0fc6c66a-48fa-4730-927d-83a8ee8cd83f
+
+	column 'TP Account Name'
+		dataType: string
+		lineageTag: 1cbeba6e-0c38-4c09-9072-eee7b72e11d2
+		summarizeBy: none
+		sourceColumn: TP Account Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enrollment Customer Name'
+		dataType: string
+		lineageTag: 8eb41abc-0df1-47fe-a6bd-32230155d838
+		summarizeBy: none
+		sourceColumn: Enrollment Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subscription GUID'
+		dataType: string
+		lineageTag: 9d2dd88b-6fe2-454a-a512-3e4795b074a4
+		summarizeBy: none
+		sourceColumn: Subscription GUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subscription Name'
+		dataType: string
+		lineageTag: a641ef5a-f06f-4adb-975c-670dc3f3efa5
+		summarizeBy: none
+		sourceColumn: Subscription Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Month'
+		dataType: dateTime
+		formatString: yyyy-mm
+		lineageTag: b75d8d70-2b9c-4fe1-81de-f4ac7179a657
+		summarizeBy: none
+		sourceColumn: Fiscal Month
+
+		variation Variation
+			isDefault
+			relationship: e492b9d5-663c-4ba0-937a-f85fd934012f
+			defaultHierarchy: LocalDateTable_aeddef17-661a-45fe-9deb-a484487a841c.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Organic ACR (USD)'
+		dataType: double
+		lineageTag: 0968c43e-fdcc-4061-9fb1-490c97d68c03
+		summarizeBy: sum
+		sourceColumn: Organic ACR (USD)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Avg Daily Organic ACR (USD)'
+		dataType: double
+		lineageTag: 6afc10d6-399c-4f25-8506-7f80ed8f85f9
+		summarizeBy: sum
+		sourceColumn: Avg Daily Organic ACR (USD)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Service Level 1'
+		dataType: string
+		lineageTag: 26ad72d0-69b7-4442-a4b7-73cfee28ed6d
+		summarizeBy: none
+		sourceColumn: Service Level 1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Level 2'
+		dataType: string
+		lineageTag: 700313d8-523c-4327-8538-6de0023e456d
+		summarizeBy: none
+		sourceColumn: Service Level 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Level 4'
+		dataType: string
+		lineageTag: 5b6df130-b131-4253-8731-dd6879b8554b
+		summarizeBy: none
+		sourceColumn: Service Level 4
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year'
+		dataType: string
+		lineageTag: 8001815d-28b5-4b9f-8d45-ffc613461392
+		summarizeBy: none
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition acr = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("x6eps4xrq2xudenlfv6naeo3i4-qiiktmqod5hebpzfnvyxwy2wg4.msit-datawarehouse.fabric.microsoft.com", "LH_dataswamp"),
+				    dbo_acr = Source{[Schema="dbo",Item="acr"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_acr,{{"tp_account_name", "TP Account Name"}, {"subscription_name", "Subscription Name"}, {"subscription_guid", "Subscription GUID"}, {"service_level_1", "Service Level 1"}, {"service_level_2", "Service Level 2"}, {"service_level_4", "Service Level 4"}, {"organic_acr_usd", "Organic ACR (USD)"}, {"fiscal_year", "Fiscal Year"}, {"fiscal_month", "Fiscal Month"}, {"avg_daily_organic_acr_usd", "Avg Daily Organic ACR (USD)"}, {"enrollment_customer_name", "Enrollment Customer Name"}})
+				in
+				    #"Renamed Columns"
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "FY26 ACR"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "75aa5a39-35d3-4d03-8701-46ad78270a1c"
+  }
+}

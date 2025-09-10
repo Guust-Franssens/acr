@@ -1,0 +1,21 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: nl-BE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["acr","RefreshInfo"]
+
+annotation PBI_ProTooling = ["TMDLView_Desktop","WebModelingEdit","DaxCopilot_Change_Accepted_In_Desktop","DaxQueryView_Desktop","DevMode"]
+
+ref table acr
+ref table DateTableTemplate_363bc06f-cc63-4123-8397-2edf1ac90b3d
+ref table LocalDateTable_aeddef17-661a-45fe-9deb-a484487a841c
+ref table RefreshInfo
+
+ref cultureInfo en-GB
+
