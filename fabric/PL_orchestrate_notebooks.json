@@ -19,7 +19,16 @@
                 },
                 "typeProperties": {
                   "notebookId": "e2855737-bd8f-4360-9032-6410c3838f43",
-                  "workspaceId": "b2a91082-1f0e-404e-bf25-6d717b635637"
+                  "workspaceId": "b2a91082-1f0e-404e-bf25-6d717b635637",
+                  "parameters": {
+                    "incremental": {
+                      "value": {
+                        "value": "@pipeline().parameters.incremental",
+                        "type": "Expression"
+                      },
+                      "type": "bool"
+                    }
+                  }
                 }
               },
               {
@@ -68,7 +77,13 @@
                   "workspaceId": "b2a91082-1f0e-404e-bf25-6d717b635637"
                 }
               }
-            ]
+            ],
+            "parameters": {
+              "incremental": {
+                "type": "bool",
+                "defaultValue": true
+              }
+            }
           }
         },
         "payloadType": "InlineBase64"
